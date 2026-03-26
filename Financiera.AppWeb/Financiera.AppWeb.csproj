@@ -6,4 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Financiera.BusinessLogic\Financiera.BusinessLogic.csproj" />
+    <ProjectReference Include="..\Financiera.Entities\Financiera.Entities.csproj" />
+  </ItemGroup>
+
 </Project>
