@@ -38,7 +38,19 @@ namespace Financiera.Data.Repositories
 
         public Cliente ObtenerPorId(int id)
         {
-            throw new NotImplementedException();
+            Cliente cliente = null;
+            using var conexion = new SqlConnection(cadenaConexion);
+            using var comando = new SqlCommand("ObtenerCliente", conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.Parameters.AddWithValue("@Id", id);
+            conexion.Open();
+            using var reader = comando.ExecuteReader();
+            if(reader != null && reader.HasRows)
+            {
+                reader.Read();
+                cliente = ConvertirReaderEnObjeto(reader);
+            }
+            return cliente;
         }
 
         public int Registrar(Cliente entity)
@@ -52,7 +64,14 @@ namespace Financiera.Data.Repositories
         {
             return new Cliente
             {
-
+                ID = reader.GetInt32(0),
+                Apellidos = reader.GetString(1),
+                Nombres = reader.GetString(2),
+                Direccion = reader.GetString(3),
+                Telefono = reader.GetString(4),
+                Email = reader.GetString(5),
+                TipoClienteID = reader.GetInt32(6),
+                Activo = reader.GetBoolean(7)
             };
         }
 
