@@ -1,6 +1,5 @@
-﻿using Financiera.AppWeb.Models;
+﻿using Financiera.AppWeb.Models.Extensions;
 using Financiera.BusinessLogic;
-using Financiera.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Financiera.AppWeb.Controllers
@@ -15,20 +14,26 @@ namespace Financiera.AppWeb.Controllers
 
         public IActionResult Index()
         {
-            var clientes = services.ListarClientes().Select(x => new ClienteVM
-            {
-                ID = x.ID,
-                Nombres = $"{x.Apellidos}, {x.Nombres}",
-                Direccion = x.Direccion,
-                Email = x.Email,
-                Telefono = x.Telefono,
-                TipoClienteID = x.TipoClienteID
-            }).ToList();
+            var clientes = services.ListarClientes().Select(x => x.ToViewModel()).ToList();
             foreach (var item in clientes)
             {
                 item.TipoCliente = services.ObtenerTipoClientePorID(item.TipoClienteID).Nombre;
             }
             return View(clientes);
+        }
+
+        public IActionResult Details(int id)
+        {
+            var cliente = services.ObtenerClientePorID(id).ToViewModel();
+            cliente.TipoCliente = services.ObtenerTipoClientePorID(cliente.TipoClienteID).Nombre;
+            
+            return View(cliente);
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var cliente = services.ObtenerClientePorID(id).ToViewModel();            
+            return View(cliente);
         }
     }
 }
