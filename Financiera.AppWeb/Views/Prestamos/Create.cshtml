@@ -1,0 +1,67 @@
+﻿@model Financiera.AppWeb.Models.PrestamoVM
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>PrestamoVM</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FechaDesposito" class="control-label"></label>
+                <input asp-for="FechaDesposito" class="form-control" />
+                <span asp-validation-for="FechaDesposito" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClienteID" class="control-label">Cliente</label>
+                <select asp-for="ClienteID" class="form-select" asp-items="@ViewBag.clientes">
+                    <option>--SELECCIONE--</option>
+                </select>
+                <span asp-validation-for="ClienteID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Importe" class="control-label"></label>
+                <input asp-for="Importe" class="form-control" />
+                <span asp-validation-for="Importe" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Plazo" class="control-label"></label>
+                <input asp-for="Plazo" class="form-control" />
+                <span asp-validation-for="Plazo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tasa" class="control-label"></label>
+                <input asp-for="Tasa" class="form-control" />
+                <span asp-validation-for="Tasa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Moneda" class="control-label"></label>
+                <input asp-for="Moneda" class="form-control" />
+                <span asp-validation-for="Moneda" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TipoPrestamoID" class="control-label">Tipo de préstamo</label>
+                <select asp-for="TipoPrestamoID" class="form-select" asp-items="@ViewBag.tipos">
+                    <option>--SELECCIONE--</option>
+                </select>
+                <span asp-validation-for="TipoPrestamoID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

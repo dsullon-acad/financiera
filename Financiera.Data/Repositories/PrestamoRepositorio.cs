@@ -46,7 +46,21 @@ namespace Financiera.Data.Repositories
 
         public int Registrar(Prestamo entity)
         {
-            throw new NotImplementedException();
+            int nuevoID = -1;
+            using var conexion = new SqlConnection(cadenaConexion);
+            using var comando = new SqlCommand("RegistrarPrestamo", conexion);
+            comando.Parameters.AddWithValue("@fechaDeposito", entity.FechaDeposito);
+            comando.Parameters.AddWithValue("@cliente", entity.ClienteID);
+            comando.Parameters.AddWithValue("@tipo", entity.TipoPrestamoID);
+            comando.Parameters.AddWithValue("@moneda", entity.Moneda);
+            comando.Parameters.AddWithValue("@importe", entity.Importe);
+            comando.Parameters.AddWithValue("@plazo", entity.Plazo);
+            comando.Parameters.AddWithValue("@tasa", entity.Tasa);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            conexion.Open();
+            nuevoID = Convert.ToInt32(comando.ExecuteScalar());
+
+            return nuevoID;
         }
 
         #region . PRIVATE METHODS .
