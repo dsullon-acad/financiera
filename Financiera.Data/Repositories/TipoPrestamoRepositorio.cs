@@ -62,11 +62,13 @@ namespace Financiera.Data.Repositories
 
         private TipoPrestamo ConvertirReaderEnObjeto(SqlDataReader reader)
         {
-            return new TipoPrestamo {
+            return new TipoPrestamo
+            {
                 ID = reader.GetInt32(0),
                 Nombre = reader.GetString(1),
                 Tasa = reader.GetDecimal(2)
             };
+        }
 
         #endregion
     }

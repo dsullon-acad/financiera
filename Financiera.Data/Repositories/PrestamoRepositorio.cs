@@ -41,7 +41,16 @@ namespace Financiera.Data.Repositories
 
         public Prestamo ObtenerPorId(int id)
         {
-            throw new NotImplementedException();
+            Prestamo prestamo = null;
+            using var conexion = new SqlConnection(cadenaConexion);
+            using var comando = new SqlCommand("ObtenerPrestamoPorID", conexion);
+            comando.Parameters.AddWithValue("@id", id);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            conexion.Open();
+            using var reader = comando.ExecuteReader();
+            reader.Read();
+            prestamo = ConvertirReaderEnObjeto(reader);
+            return prestamo;
         }
 
         public int Registrar(Prestamo entity)

@@ -24,7 +24,9 @@ namespace Financiera.AppWeb.Controllers
         public IActionResult Create()
         {
             var listadoClientes = service.ListarClientes();
+            var listadoTipos = service.ListarTiposPrestamo();
             ViewBag.clientes = new SelectList(listadoClientes, "ID", "NombreCompleto");
+            ViewBag.tipos = new SelectList(listadoTipos, "ID", "Nombre");
             return View(new PrestamoVM());
         }
 
@@ -33,6 +35,12 @@ namespace Financiera.AppWeb.Controllers
         {
             Prestamo prestamo = service.CrearPrestamo(nuevoPrestamo.ToEntity());
             return RedirectToAction("Details", new { id = prestamo.ID });
+        }
+
+        public IActionResult Details(int id)
+        {
+            var prestamo = service.ObtenerPrestamoPorID(id).ToViewModel();
+            return View(prestamo);
         }
     }
 }
